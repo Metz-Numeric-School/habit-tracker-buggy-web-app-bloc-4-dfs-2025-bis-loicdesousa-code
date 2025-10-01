@@ -55,3 +55,5 @@ Le code doit impérativement être push sur le repo GitHub Classroom qui vous a 
 Première modif test
 
 J'ai créé deux users si nécessaire pour vérifier les erreurs etc, lolo@lolo.com avec comme mdp lolo
+id aapanel vh8wxx5j
+mdp aapanel De67hDH676D
