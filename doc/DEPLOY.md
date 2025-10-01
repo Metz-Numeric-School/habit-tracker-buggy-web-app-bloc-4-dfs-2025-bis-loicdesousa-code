@@ -19,3 +19,13 @@ VARNAME=${1:?"missing arg 1 for tag name or branch name"}
 git --git-dir=/var/depot_git --work-tree=/www/wwwroot/examdeploiement checkout -f $VARNAME
 suite à ça on a deux choix, soit en faire un éxécutable soit faire un exe, dans ce cas je préfère faire le deuxième avec: chmod +x deploy.sh
 ./deploy.sh master # soit master/le nom de la branch soit le tag
+
+## Mon cas
+
+Dans mon cas précis je connaissais les démarches plutôt précisément mais arrivé à mon premier push vps j'ai eu une erreur que je n'avais jamais eu lors de mes entrainements etc:
+
+ssh: connect to host 172.17.4.30 port 22: No route to host
+fatal: Could not read from remote repository.
+
+De moi même je pensais que le port 22 n'était pas ouvert sur ma vm, ou bien que la vm ne tournait plus, mais je peux la ping et elle peut également ping. J'ai tenté de reset le/les port(s), de redémarrer tout le processus mais rien n'a changé. En faisant des recherches je suis plusieurs fois et majoritairement tombé sur le fait que cela provienne de soucis de réseau , soit de ma machine soit de la VM, mais que ce soit en termes de technique ou de temps je n'ai pas ce qu'il faut là pendant l'examen qui a une durée à respecter pour régler cela.(j'ai aussi eu d'autres hypothèses qui m'ont amené à faire d'autres commandes, que le ssh avait été enlevé alors j'ai essayé de le redémarrer, j'ai même trouvé deux posts parlant du pare feu d'où je me situe (en l'occurence l'école) mais cela ne me parait pas cohérent)
+En espérant que cela puisse aider à faire comprendre mon cas, merci.

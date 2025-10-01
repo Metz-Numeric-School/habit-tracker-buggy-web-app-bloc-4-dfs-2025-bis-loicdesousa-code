@@ -6,10 +6,10 @@
     <form action="/habits/create" method="post" class="mt-4">
         <div class="mb-3">
             <label for="habit_name" class="form-label">Nom de l'habitude</label>
-            <input type="text" name="habit[name]" id="habit_name" class="form-control" 
-                   value="<?= htmlspecialchars($_POST['habit']['name'] ?? '') ?>">
+            <input type="text" name="habit[name]" id="habit_name" class="form-control"
+                value="<?= htmlspecialchars($_POST['habit']['name'] ?? '') ?>">
             <?php if (!empty($errors['name'])): ?>
-                <div class="text-danger mt-1"><?= $errors['name'] ?></div>
+                <div class="text-danger mt-1"><?= htmlspecialchars($errors['name']) ?></div>
             <?php endif; ?>
         </div>
 

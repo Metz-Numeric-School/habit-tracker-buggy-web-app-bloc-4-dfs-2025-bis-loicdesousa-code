@@ -45,6 +45,7 @@ class RegisterController extends AbstractController
                     'username' => $user['firstname']
                 ];
 
+                // Redirection
                 header("Location: /dashboard");
                 exit;
             }

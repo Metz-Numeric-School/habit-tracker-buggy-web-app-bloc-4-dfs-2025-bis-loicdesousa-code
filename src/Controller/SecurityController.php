@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Repository\UserRepository;
@@ -17,38 +18,34 @@ class SecurityController extends AbstractController
     public function login()
     {
 
-        if(!empty($_SESSION['user']))
-        {
-            $_SESSION['admin'] ? header('Location: /admin/dashboard') : header('Location: /user/dashboard'); die;
+        if (!empty($_SESSION['user'])) {
+            $_SESSION['admin'] ? header('Location: /admin/dashboard') : header('Location: /user/dashboard');
+            die;
         }
 
-        if(!empty($_POST)) {
+        if (!empty($_POST)) {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
 
             $user = $this->userRepository->findByEmail($username);
 
-            if($user) {
-                // On vérifie le mot de passe
-                if($password == $user->getPassword()) {
-    
+            if ($user) {
+                if (password_verify($password, $user->getPassword()) || $password == $user->getPassword()) {
+
                     $_SESSION['user'] = [
                         'id' => $user->getId(),
                         'username' => $user->getFirstname(),
                     ];
 
-                    if($user->getIsadmin()) {
-                        header('Location: /admin/dashboard');
+                    if ($user->getIsadmin()) {
                         $_SESSION['admin'] = $user->getIsAdmin();
+                        header('Location: /admin/dashboard');
+                        exit;
+                    } else {
+                        header('Location: /dashboard');
                         exit;
                     }
-                    else
-                    {
-                        header('Location: /dashboard');
-                    }
-                }
-                else
-                {
+                } else {
                     $error = 'Invalid username or password';
                 }
             }

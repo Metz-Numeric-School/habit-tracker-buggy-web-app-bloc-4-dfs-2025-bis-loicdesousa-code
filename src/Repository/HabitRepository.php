@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repository;
 
 use App\Entity\Habit;
@@ -15,18 +16,19 @@ class HabitRepository extends AbstractRepository
 
     public function find(int $id)
     {
-        $habit = $this->getConnection()->query("SELECT * FROM habits WHERE id = $id");
-        return EntityMapper::map(Habit::class, $habit->fetch());
+        $stmt = $this->getConnection()->prepare("SELECT * FROM habits WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        return EntityMapper::map(Habit::class, $stmt->fetch());
     }
 
     public function findByUser(int $userId)
     {
-        $sql = "SELECT * FROM habits WHERE user_id = $userId";
-        $query = $this->getConnection()->query($sql);
-        return EntityMapper::mapCollection(Habit::class, $query->fetchAll());
+        $stmt = $this->getConnection()->prepare("SELECT * FROM habits WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $userId]);
+        return EntityMapper::mapCollection(Habit::class, $stmt->fetchAll());
     }
 
-     /**
+    /**
      * Compte le nombre d'habitudes actives pour un utilisateur
      */
     public function countByUser(int $userId): int
@@ -39,16 +41,14 @@ class HabitRepository extends AbstractRepository
 
     public function insert(array $data = array())
     {
-        $name = $data['name'];   
-        $description = $data['description'];
+        $sql = "INSERT INTO habits (user_id, name, description, created_at) VALUES (:user_id, :name, :description, NOW())";
+        $stmt = $this->getConnection()->prepare($sql);
 
-        // Requête construite par concaténation (vulnérable)
-        $sql = "INSERT INTO habits (user_id, name, description, created_at) VALUES (" 
-            . $data['user_id'] . ", '" 
-            . $name . "', '" 
-            . $description . "', NOW())";
-
-        $query = $this->getConnection()->query($sql);
+        $stmt->execute([
+            'user_id' => $data['user_id'],
+            'name' => $data['name'],
+            'description' => $data['description']
+        ]);
 
         return $this->getConnection()->lastInsertId();
     }
@@ -90,5 +90,4 @@ class HabitRepository extends AbstractRepository
 
         return $streak;
     }
-
 }

@@ -40,11 +40,13 @@ class RegisterController extends AbstractController
                 $user['isadmin'] = 0;
                 $id = $this->userRepository->insert($user);
 
+                // Authentification automatique
                 $_SESSION['user'] = [
                     'id' => $id,
                     'username' => $user['firstname']
                 ];
 
+                // Redirection
                 header("Location: /dashboard");
                 exit;
             }
