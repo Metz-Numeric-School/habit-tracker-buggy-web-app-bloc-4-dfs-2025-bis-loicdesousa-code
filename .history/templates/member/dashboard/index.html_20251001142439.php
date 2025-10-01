@@ -1,7 +1,7 @@
-<?php $layout = 'base.html.php'; ?>
+Warning: Undefined array key "firstname" in /Users/loic/Documents/dev/examdéploiement/habit-tracker-buggy-web-app-bloc-4-dfs-2025-bis-loicdesousa-code/templates/member/dashboard/index.html.php on line 4<?php $layout = 'base.html.php'; ?>
 
 <div class="container py-5">
-    <h1 class="mb-4">Bonjour <?= $_SESSION['user']['username'] ?> !</h1>
+    <h1 class="mb-4">Bonjour <?= $_SESSION['user']['firstname'] ?> !</h1>
 
     <div class="row mb-4">
         <!-- Statistiques rapides -->

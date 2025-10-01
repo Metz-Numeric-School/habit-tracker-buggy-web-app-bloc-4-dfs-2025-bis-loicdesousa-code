@@ -18,8 +18,7 @@ class UserRepository extends AbstractRepository
     {
         $stmt = $this->getConnection()->prepare("SELECT * FROM mns_user WHERE id = :id");
         $stmt->execute(['id' => $id]);
-        $result = $stmt->fetch();
-        return $result ? EntityMapper::map(User::class, $result) : null;
+        return EntityMapper::map(User::class, $stmt->fetch());
     }
 
     public function findByEmail(string $email)
